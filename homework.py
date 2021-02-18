@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[21]:
+# In[1]:
 
 
 import torch, torchvision
@@ -11,16 +11,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-# # Part 1
+# # PART ONE
 
-# In[115]:
+# In[2]:
 
 
 img = Image.open(urlopen("https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg"))
 img
 
 
-# In[116]:
+# In[3]:
 
 
 # load model
@@ -38,7 +38,7 @@ transform = torchvision.transforms.Compose([
  )])
 
 
-# In[117]:
+# In[4]:
 
 
 img_t = transform(img)
@@ -46,7 +46,7 @@ print(img_t.shape)
 plt.imshow(torch.einsum("chw -> hwc", img_t))
 
 
-# In[118]:
+# In[5]:
 
 
 batch_t = torch.unsqueeze(img_t, 0)
@@ -65,17 +65,14 @@ for idx in indices[0][:5]:
 
 # #### Task
 # 
-# Modify the code above, to perform data augmentation for the testing sample (averaging the scores of 5 crops: center crop, upper left crop, lower left crop, lower right crop, upper right crop).
-# 
-# Please discuss the advantages and disadvantages of using testing data augmentation.
+# Modify the code above, to perform data augmentation for the testing sample averaging the scores of 5 crops
+# - center crop
+# - upper left crop
+# - lower left crop
+# - lower right crop
+# - upper right crop
 
-# In[119]:
-
-
-# https://pytorch.org/docs/stable/torchvision/transforms.html#torchvision.transforms.FiveCrop
-
-
-# In[120]:
+# In[6]:
 
 
 transform_after_crop = torchvision.transforms.Compose([
@@ -86,7 +83,7 @@ transform_after_crop = torchvision.transforms.Compose([
  )])
 
 
-# In[121]:
+# In[7]:
 
 
 npimg = np.array(img)
@@ -104,38 +101,84 @@ for i,crop in enumerate(crops):
 plt.show()
 
 
-# In[128]:
+# In[8]:
 
 
 batch_t = torch.stack([transform_after_crop(crop) for crop in crops])
 plt.imshow(torch.einsum("chw -> hwc", batch_t[-1]))
 
 
-# In[132]:
+# In[9]:
+
+
+RESNET_LABEL_URL = "https://gist.githubusercontent.com/steverichey/3d87d581a8713e65ac6c2d0848151ff5/raw/272734c0bb45847d47f1ecb1f75b814379a5c3d0/imagenet_labels.txt"
+text = urlopen(RESNET_LABEL_URL).read().decode('utf-8')
+labels = {i:k for i,k in enumerate(text.split("\n"), start=1)}
+
+
+# In[ ]:
 
 
 # perform inference
 out_arr = resnet(batch_t)
 
 # lookup the labels
+all_percentages = np.zeros(1000)
 
 # print top-5 classes predicted by model
 for out in out_arr:
     out = torch.stack([out])
+    percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
+    all_percentages += percentage.detach().numpy()/5
     _, indices = torch.sort(out, descending=True)
     print()
-    percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
     for idx in indices[0][:5]:
-        print('Label:', idx, '. Confidence Score: {:.3f} %'.format(percentage[idx].item()))
+        print('Confidence Score: {:.3f} % - {}'.format(percentage[idx].item(), labels[idx.item()]))
 
 
-# In[124]:
+# In[ ]:
 
 
-# indices
+for idx, _ in sorted(enumerate(all_percentages), key=lambda x:x[1])[-5:][::-1]:
+    print('Confidence Score: {:.3f} % - {}'.format(all_percentages[idx], labels[idx]))
 
 
-# In[125]:
+# Please discuss the advantages and disadvantages of using testing data augmentation.
+# 
+# Advantages
+# - Data augmentation with corner and center crops allows for different views of the testing data.
+# - It is important to carry out the same augmentation that is applied on the training data (except distortions), such as normalising and resizing. This allow the test sample to match how the train sample was prepared and is of the correct dimension.
+# 
+# Disadvantages
+# - If the laballed object is small and is in the center of the picture, the center crops may not capture the object and the prediction will be irrelevant, weakening the confidence of the prediction.
+
+# # PART TWO
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
 
 
 get_ipython().system('jupyter nbconvert --to script homework.ipynb')
