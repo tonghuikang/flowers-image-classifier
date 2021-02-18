@@ -62,13 +62,15 @@ def validation(model, testloader, criterion, device):
     return test_loss, accuracy
 
 # Define NN function
-def make_NN(n_hidden, n_epoch, labelsdict, lr, device, model_name, trainloader, validloader, train_data):
+def make_NN(n_hidden, n_epoch, labelsdict, lr, device, model_name, trainloader, validloader, train_data,
+            not_use_pretrained=False, train_all_layers=False):
     # Import pre-trained NN model 
-    model = getattr(models, model_name)(pretrained=True)
+    model = getattr(models, model_name)(pretrained=not not_use_pretrained)
     
+    if not train_all_layers:
     # Freeze parameters that we don't need to re-train 
-    for param in model.parameters():
-        param.requires_grad = False
+        for param in model.parameters():
+            param.requires_grad = False
 
     # Make classifier
     name_of_last_layer = list(model.named_modules())[-1][0]

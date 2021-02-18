@@ -40,7 +40,7 @@ def load_data(data_dir):
     testloader = torch.utils.data.DataLoader(test_data, batch_size=32)
     validloader = torch.utils.data.DataLoader(valid_data, batch_size=32)
     
-    return trainloader, testloader, validloader, train_data
+    return trainloader, testloader, validloader, train_data, testloader, test_data
 
 # Define processing testing image function
 def process_image(image):

@@ -175,15 +175,45 @@ get_ipython().system('python train.py "./flowers" --arch resnet18 --gpu')
 # ## TASK TWO
 # 
 # (2) Please try different training methods that use densenet169 as the base model and compare their performance on the validation set.
-# - training the whole model from scratch
 # - finetuning the model but only updating the top layers
 # - finetuning the whole model
+# - training the whole model from scratch
 # 
 # Please also draw the curves of training/validation losses over training steps for these methods, and give your analysis based on the observed curves.
+
+# ### Finetuning the model but only updating the top layers
+
+# In[41]:
+
+
+get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu')
+
+
+# ### Finetuning the whole model
+
+# In[43]:
+
+
+get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --train_all_layers')
+
+
+# ### Training the whole model from scratch
+
+# In[ ]:
+
+
+get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --not_use_pretrained --train_all_layers')
+
 
 # ## TASK THREE
 # 
 # (3) For the model based on densenet169, please also report its performance (when you use the training method of finetuning the model but only updating the top layers) on the testing set.
+
+# In[ ]:
+
+
+get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --test_model')
+
 
 # ## TASK FOUR
 # 
@@ -201,7 +231,7 @@ get_ipython().system('python train.py "./flowers" --arch resnet18 --gpu')
 
 
 
-# In[19]:
+# In[40]:
 
 
 get_ipython().system('jupyter nbconvert --to script homework.ipynb')
