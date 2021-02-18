@@ -11,6 +11,8 @@ parser.add_argument("--hidden_units", type=int, default=1024, help="set hidden u
 parser.add_argument("--epochs", type=int, default=1, help="set epochs")
 parser.add_argument("--gpu", action="store_const", const="cuda", default="cpu", help="use gpu")
 parser.add_argument("--save_dir", help="save model")
+parser.add_argument("--use_pretrained", type=bool, default=False, help="whether to use pretrained model")
+parser.add_argument("--train_all_layers", type=bool, default=False, help="whether to use pretrained model")
 
 args = parser.parse_args()
 

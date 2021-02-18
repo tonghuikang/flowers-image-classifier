@@ -69,15 +69,16 @@ def make_NN(n_hidden, n_epoch, labelsdict, lr, device, model_name, trainloader, 
     # Freeze parameters that we don't need to re-train 
     for param in model.parameters():
         param.requires_grad = False
-        
+
     # Make classifier
-    n_in = next(model.classifier.modules()).in_features  # problem
-    n_out = len(labelsdict) 
-    model.classifier = NN_Classifier(input_size=n_in, output_size=n_out, hidden_layers=n_hidden)
+    name_of_last_layer = list(model.named_modules())[-1][0]
+    n_in = list(model.children())[-1].in_features
+    n_out = len(labelsdict)
+    setattr(model, name_of_last_layer, NN_Classifier(input_size=n_in, output_size=n_out, hidden_layers=n_hidden))
     
     # Define criterion and optimizer
     criterion = nn.NLLLoss()
-    optimizer = optim.Adam(model.classifier.parameters(), lr = lr)
+    optimizer = optim.Adam(getattr(model, name_of_last_layer).parameters(), lr = lr)
 
     model.to(device)
     start = time.time()
@@ -120,21 +121,12 @@ def make_NN(n_hidden, n_epoch, labelsdict, lr, device, model_name, trainloader, 
                 # Make sure training is back on
                 model.train()
     
-    # Add model info 
-    model.classifier.n_in = n_in
-    model.classifier.n_hidden = n_hidden
-    model.classifier.n_out = n_out
-    model.classifier.labelsdict = labelsdict
-    model.classifier.lr = lr
-    model.classifier.optimizer_state_dict = optimizer.state_dict
-    model.classifier.model_name = model_name
-    model.classifier.class_to_idx = train_data.class_to_idx
-    
     print('model:', model_name, '- hidden layers:', n_hidden, '- epochs:', n_epoch, '- lr:', lr)
     print(f"Run time: {(time.time() - start)/60:.3f} min")
     return model
 
 # Define function to save checkpoint
+# not for non-densenet
 def save_checkpoint(model, path):
     checkpoint = {'c_input': model.classifier.n_in,
                   'c_hidden': model.classifier.n_hidden,
@@ -150,6 +142,7 @@ def save_checkpoint(model, path):
     torch.save(checkpoint, path)
     
 # Define function to load model
+# not for non-densenet
 def load_model(path):
     cp = torch.load(path)
     

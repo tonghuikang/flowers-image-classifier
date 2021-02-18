@@ -160,13 +160,13 @@ for idx, _ in sorted(enumerate(all_percentages), key=lambda x:x[1])[-5:][::-1]:
 # 
 # (1) Replace the used base model (densenet169) to another model (refer to https://pytorch.org/vision/0.8/models.html for more types of models). Pls compare the performance of these two models on the validation set. 
 
-# In[14]:
+# In[39]:
 
 
 get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu')
 
 
-# In[18]:
+# In[38]:
 
 
 get_ipython().system('python train.py "./flowers" --arch resnet18 --gpu')
@@ -174,7 +174,12 @@ get_ipython().system('python train.py "./flowers" --arch resnet18 --gpu')
 
 # ## TASK TWO
 # 
-# (2) Please try different training methods that use densenet169 as the base model (i.e., training the whole model from scratch, finetuning the model but only updating the top layers, finetuning the whole model), and compare their performance on the validation set. Please also draw the curves of training/validation losses over training steps for these methods, and give your analysis based on the observed curves.
+# (2) Please try different training methods that use densenet169 as the base model and compare their performance on the validation set.
+# - training the whole model from scratch
+# - finetuning the model but only updating the top layers
+# - finetuning the whole model
+# 
+# Please also draw the curves of training/validation losses over training steps for these methods, and give your analysis based on the observed curves.
 
 # ## TASK THREE
 # 
@@ -196,7 +201,7 @@ get_ipython().system('python train.py "./flowers" --arch resnet18 --gpu')
 
 
 
-# In[12]:
+# In[19]:
 
 
 get_ipython().system('jupyter nbconvert --to script homework.ipynb')
