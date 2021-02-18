@@ -116,7 +116,7 @@ text = urlopen(RESNET_LABEL_URL).read().decode('utf-8')
 labels = {i:k for i,k in enumerate(text.split("\n"), start=1)}
 
 
-# In[ ]:
+# In[10]:
 
 
 # perform inference
@@ -136,7 +136,7 @@ for out in out_arr:
         print('Confidence Score: {:.3f} % - {}'.format(percentage[idx].item(), labels[idx.item()]))
 
 
-# In[ ]:
+# In[11]:
 
 
 for idx, _ in sorted(enumerate(all_percentages), key=lambda x:x[1])[-5:][::-1]:
@@ -153,6 +153,42 @@ for idx, _ in sorted(enumerate(all_percentages), key=lambda x:x[1])[-5:][::-1]:
 # - If the laballed object is small and is in the center of the picture, the center crops may not capture the object and the prediction will be irrelevant, weakening the confidence of the prediction.
 
 # # PART TWO
+# (Note: In this task, if you are adapting the code based on the open-source projects, pls acknowledge the original source in your code files, and also clearly mention it in your report. Also you need to clearly highlight which parts are done by yourself)
+
+# ## TASK ONE
+# 
+# 
+# (1) Replace the used base model (densenet169) to another model (refer to https://pytorch.org/vision/0.8/models.html for more types of models). Pls compare the performance of these two models on the validation set. 
+
+# In[14]:
+
+
+get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu')
+
+
+# In[18]:
+
+
+get_ipython().system('python train.py "./flowers" --arch resnet18 --gpu')
+
+
+# ## TASK TWO
+# 
+# (2) Please try different training methods that use densenet169 as the base model (i.e., training the whole model from scratch, finetuning the model but only updating the top layers, finetuning the whole model), and compare their performance on the validation set. Please also draw the curves of training/validation losses over training steps for these methods, and give your analysis based on the observed curves.
+
+# ## TASK THREE
+# 
+# (3) For the model based on densenet169, please also report its performance (when you use the training method of finetuning the model but only updating the top layers) on the testing set.
+
+# ## TASK FOUR
+# 
+# (4) Please replace the base model to a new model which contains some convolutional layers. You need to write this new model by yourselves, and then report its performance on the validation set. Note, pls try different numbers of convolutional layers for your model, and compare their results, and give analysis for the results. You need to try at least 2 different numbers of conv layers.
+
+# ## Extra tasks (not included in Homework 3)
+# 
+# (5) Please try using two different learning rate scheduling schemes for densenet169, and compare the performance on the validation set.
+# 
+# (6) Please try using two different optimizers for densenet169, and compare the performance on the validation set.
 
 # In[ ]:
 
@@ -160,25 +196,7 @@ for idx, _ in sorted(enumerate(all_percentages), key=lambda x:x[1])[-5:][::-1]:
 
 
 
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
+# In[12]:
 
 
 get_ipython().system('jupyter nbconvert --to script homework.ipynb')
