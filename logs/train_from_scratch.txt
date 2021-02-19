@@ -1,0 +1,7 @@
+Epoch: 1/2 Step: 1 -  Training Loss: 4.634 -  Validation Loss: 4.581 -  Validation Accuracy: 0.048
+Epoch: 1/2 Step: 2 -  Training Loss: 4.555 -  Validation Loss: 4.557 -  Validation Accuracy: 0.049
+Epoch: 1/2 Step: 5 -  Training Loss: 4.670 -  Validation Loss: 4.458 -  Validation Accuracy: 0.127
+Epoch: 1/2 Step: 10 -  Training Loss: 4.419 -  Validation Loss: 4.302 -  Validation Accuracy: 0.096
+Epoch: 1/2 Step: 20 -  Training Loss: 4.087 -  Validation Loss: 3.740 -  Validation Accuracy: 0.300
+Epoch: 1/2 Step: 51 -  Training Loss: 3.117 -  Validation Loss: 2.149 -  Validation Accuracy: 0.544
+Epoch: 2/2 Step: 104 -  Training Loss: 1.675 -  Validation Loss: 0.896 -  Validation Accuracy: 0.845

@@ -85,11 +85,14 @@ def make_NN(n_hidden, n_epoch, labelsdict, lr, device, model_name, trainloader, 
     model.to(device)
     start = time.time()
 
-    epochs = n_epoch
     steps = 0 
     running_loss = 0
-    print_every = 40
-    for e in range(epochs):
+    
+    prev_step = 0
+    prev_epoch = -1
+    special_steps = set([1,2,5,10,20,51])
+    
+    for e in range(n_epoch+1):
         model.train()
         for images, labels in trainloader:
             images, labels = images.to(device), labels.to(device)
@@ -105,7 +108,7 @@ def make_NN(n_hidden, n_epoch, labelsdict, lr, device, model_name, trainloader, 
 
             running_loss += loss.item()
 
-            if steps % print_every == 0:
+            if prev_epoch != e or steps in special_steps:
                 # Eval mode for predictions
                 model.eval()
 
@@ -113,12 +116,16 @@ def make_NN(n_hidden, n_epoch, labelsdict, lr, device, model_name, trainloader, 
                 with torch.no_grad():
                     test_loss, accuracy = validation(model, validloader, criterion, device)
 
-                print("Epoch: {}/{} - ".format(e+1, epochs),
-                      "Training Loss: {:.3f} - ".format(running_loss/print_every),
+                print("Epoch: {}/{} Step: {} - ".format(e, n_epoch, steps),
+                      "Training Loss: {:.3f} - ".format(running_loss/(steps-prev_step)),
                       "Validation Loss: {:.3f} - ".format(test_loss/len(validloader)),
                       "Validation Accuracy: {:.3f}".format(accuracy/len(validloader)))
-
+                print(f"Run time: {(time.time() - start)/60:.3f} min")
                 running_loss = 0
+                prev_step = steps
+                prev_epoch = e
+                if e == n_epoch:
+                    break
 
                 # Make sure training is back on
                 model.train()
