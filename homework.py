@@ -160,16 +160,16 @@ for idx, _ in sorted(enumerate(all_percentages), key=lambda x:x[1])[-5:][::-1]:
 # 
 # (1) Replace the used base model (densenet169) to another model (refer to https://pytorch.org/vision/0.8/models.html for more types of models). Pls compare the performance of these two models on the validation set. 
 
-# In[39]:
+# In[12]:
 
 
-get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu')
+get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --epochs=2')
 
 
-# In[38]:
+# In[13]:
 
 
-get_ipython().system('python train.py "./flowers" --arch resnet18 --gpu')
+get_ipython().system('python train.py "./flowers" --arch resnet18 --gpu --epochs=2')
 
 
 # ## TASK TWO
@@ -183,33 +183,33 @@ get_ipython().system('python train.py "./flowers" --arch resnet18 --gpu')
 
 # ### Finetuning the model but only updating the top layers
 
-# In[41]:
+# In[19]:
 
 
-get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu')
+get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --epochs=2')
 
 
 # ### Finetuning the whole model
 
-# In[43]:
+# In[20]:
 
 
-get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --train_all_layers')
+get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --train_all_layers --epochs=2')
 
 
 # ### Training the whole model from scratch
 
-# In[ ]:
+# In[21]:
 
 
-get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --not_use_pretrained --train_all_layers')
+get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --not_use_pretrained --train_all_layers --epochs=10')
 
 
 # ## TASK THREE
 # 
 # (3) For the model based on densenet169, please also report its performance (when you use the training method of finetuning the model but only updating the top layers) on the testing set.
 
-# In[ ]:
+# In[17]:
 
 
 get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --test_model')
@@ -231,7 +231,7 @@ get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --tes
 
 
 
-# In[40]:
+# In[46]:
 
 
 get_ipython().system('jupyter nbconvert --to script homework.ipynb')
