@@ -120,7 +120,6 @@ def make_NN(n_hidden, n_epoch, labelsdict, lr, device, model_name, trainloader, 
                       "Training Loss: {:.3f} - ".format(running_loss/(steps-prev_step)),
                       "Validation Loss: {:.3f} - ".format(test_loss/len(validloader)),
                       "Validation Accuracy: {:.3f}".format(accuracy/len(validloader)))
-                print(f"Run time: {(time.time() - start)/60:.3f} min")
                 running_loss = 0
                 prev_step = steps
                 prev_epoch = e
