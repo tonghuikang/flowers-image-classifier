@@ -239,7 +239,7 @@ plt.show()
 # 
 # (3) For the model based on densenet169, please also report its performance (when you use the training method of finetuning the model but only updating the top layers) on the testing set.
 
-# In[ ]:
+# In[60]:
 
 
 get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --test_model --epochs=1')
@@ -249,10 +249,16 @@ get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --tes
 # 
 # (4) Please replace the base model to a new model which contains some convolutional layers. You need to write this new model by yourselves, and then report its performance on the validation set. Note, pls try different numbers of convolutional layers for your model, and compare their results, and give analysis for the results. You need to try at least 2 different numbers of conv layers.
 
-# In[ ]:
+# In[83]:
 
 
+get_ipython().system('python train.py "./flowers" --arch homemade_CNN_small --not_use_pretrained --gpu --epochs=1')
 
+
+# In[84]:
+
+
+get_ipython().system('python train.py "./flowers" --arch homemade_CNN_large --not_use_pretrained --gpu --epochs=1')
 
 
 # ## Extra tasks (not included in Homework 3)
@@ -261,13 +267,13 @@ get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --tes
 # 
 # (6) Please try using two different optimizers for densenet169, and compare the performance on the validation set.
 
-# In[ ]:
+# In[42]:
 
 
+get_ipython().system('python model_ic.py')
 
 
-
-# In[26]:
+# In[34]:
 
 
 get_ipython().system('jupyter nbconvert --to script homework.ipynb')

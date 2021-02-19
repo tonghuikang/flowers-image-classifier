@@ -8,6 +8,54 @@ from torch import optim
 import torch.nn.functional as F
 from torchvision import models
 
+class homemade_CNN(nn.Module):
+    def __init__(self, num_layers=1):
+        super(homemade_CNN, self).__init__()
+        
+        self.layer1 = nn.Sequential(
+            nn.Conv2d(in_channels=3, out_channels=32, kernel_size=3, padding=1),
+            nn.BatchNorm2d(32),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2)
+        )
+        self.num_layers = num_layers
+        for i in range(self.num_layers):
+            setattr(self, "layer{}".format(i+2), nn.Sequential(
+                nn.Conv2d(in_channels=32, out_channels=32, kernel_size=3, padding=1),
+                nn.BatchNorm2d(32),
+                nn.ReLU(),
+            ))
+        self.layer0 = nn.Sequential(
+            nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3),
+            nn.BatchNorm2d(64),
+            nn.ReLU(),
+            nn.MaxPool2d(2)
+        )
+        
+        self.fc1 = nn.Linear(in_features=193600, out_features=600)
+        self.drop = nn.Dropout2d(0.25)
+        self.fc2 = nn.Linear(in_features=600, out_features=120)
+        self.fc3 = nn.Linear(in_features=120, out_features=120)
+        
+    def forward(self, x):
+        out = self.layer1(x)
+        for i in range(self.num_layers):
+            out = getattr(self, "layer{}".format(i+2))(out)
+        out = self.layer0(out)
+        out = out.view(out.size(0), -1)
+        out = self.fc1(out)
+        out = self.drop(out)
+        out = self.fc2(out)
+        out = self.fc3(out)
+        
+        return out
+
+homemade_CNN_small = homemade_CNN(1)
+homemade_CNN_large = homemade_CNN(10)
+setattr(models, "homemade_CNN_small", homemade_CNN_small)
+setattr(models, "homemade_CNN_large", homemade_CNN_large)
+
+
 # Define classifier class
 class NN_Classifier(nn.Module):
     def __init__(self, input_size, output_size, hidden_layers, drop_p=0.5):
@@ -32,6 +80,7 @@ class NN_Classifier(nn.Module):
         
         self.dropout = nn.Dropout(p=drop_p)
         
+
     def forward(self, x):
         ''' Forward pass through the network, returns the output logits '''
         
@@ -64,8 +113,12 @@ def validation(model, testloader, criterion, device):
 # Define NN function
 def make_NN(n_hidden, n_epoch, labelsdict, lr, device, model_name, trainloader, validloader, train_data,
             not_use_pretrained=False, train_all_layers=False):
+    
+    if not_use_pretrained:
+        model = getattr(models, model_name)
+    else:
     # Import pre-trained NN model 
-    model = getattr(models, model_name)(pretrained=not not_use_pretrained)
+        model = getattr(models, model_name)(pretrained=not not_use_pretrained)
     
     if not train_all_layers:
     # Freeze parameters that we don't need to re-train 
@@ -193,3 +246,5 @@ def test_model(model, testloader, device='cuda'):
         accuracy += equality.type(torch.FloatTensor).mean()
     
     print('Testing Accuracy: {:.3f}'.format(accuracy/len(testloader)))
+    
+
