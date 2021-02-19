@@ -163,13 +163,13 @@ for idx, _ in sorted(enumerate(all_percentages), key=lambda x:x[1])[-5:][::-1]:
 # In[12]:
 
 
-get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --epochs=1')
+get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --epochs=3')
 
 
 # In[13]:
 
 
-get_ipython().system('python train.py "./flowers" --arch resnet18 --gpu --epochs=1')
+get_ipython().system('python train.py "./flowers" --arch resnet18 --gpu --epochs=3')
 
 
 # ## TASK TWO
@@ -183,29 +183,29 @@ get_ipython().system('python train.py "./flowers" --arch resnet18 --gpu --epochs
 
 # ### Finetuning the model but only updating the top layers
 
-# In[27]:
+# In[14]:
 
 
-get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --epochs=10 > ./logs/finetune_only_top_layer.txt')
+# !python train.py "./flowers" --arch densenet169 --gpu --epochs=10 > ./logs/finetune_only_top_layer.txt
 
 
 # ### Finetuning the whole model
 
-# In[28]:
+# In[15]:
 
 
-get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --train_all_layers --epochs=10 > ./logs/finetune_whole_model.txt')
+# !python train.py "./flowers" --arch densenet169 --gpu --train_all_layers --epochs=10 > ./logs/finetune_whole_model.txt
 
 
 # ### Training the whole model from scratch
 
-# In[29]:
+# In[16]:
 
 
-get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --not_use_pretrained --train_all_layers --epochs=10 > ./logs/train_from_scratch.txt')
+# !python train.py "./flowers" --arch densenet169 --gpu --not_use_pretrained --train_all_layers --epochs=10 > ./logs/train_from_scratch.txt
 
 
-# In[33]:
+# In[17]:
 
 
 import matplotlib.pyplot as plt
@@ -231,6 +231,7 @@ for file, color in zip(files, colors):
 
 plt.ylabel("loss")
 plt.xlabel("steps")
+plt.yscale("log")
 plt.legend()
 plt.show()
 
@@ -239,26 +240,26 @@ plt.show()
 # 
 # (3) For the model based on densenet169, please also report its performance (when you use the training method of finetuning the model but only updating the top layers) on the testing set.
 
-# In[60]:
+# In[ ]:
 
 
-get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --test_model --epochs=1')
+get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --test_model --epochs=3')
 
 
 # ## TASK FOUR
 # 
 # (4) Please replace the base model to a new model which contains some convolutional layers. You need to write this new model by yourselves, and then report its performance on the validation set. Note, pls try different numbers of convolutional layers for your model, and compare their results, and give analysis for the results. You need to try at least 2 different numbers of conv layers.
 
-# In[83]:
+# In[ ]:
 
 
-get_ipython().system('python train.py "./flowers" --arch homemade_CNN_small --not_use_pretrained --gpu --epochs=1')
+get_ipython().system('python train.py "./flowers" --arch homemade_CNN_small --not_use_pretrained --gpu --epochs=3')
 
 
-# In[84]:
+# In[20]:
 
 
-get_ipython().system('python train.py "./flowers" --arch homemade_CNN_large --not_use_pretrained --gpu --epochs=1')
+get_ipython().system('python train.py "./flowers" --arch homemade_CNN_large --not_use_pretrained --gpu --epochs=3')
 
 
 # ## Extra tasks (not included in Homework 3)
@@ -267,13 +268,7 @@ get_ipython().system('python train.py "./flowers" --arch homemade_CNN_large --no
 # 
 # (6) Please try using two different optimizers for densenet169, and compare the performance on the validation set.
 
-# In[42]:
-
-
-get_ipython().system('python model_ic.py')
-
-
-# In[34]:
+# In[21]:
 
 
 get_ipython().system('jupyter nbconvert --to script homework.ipynb')
