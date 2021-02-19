@@ -1,16 +1,18 @@
-Epoch: 0/1 Step: 1 -  Training Loss: 4.632 -  Validation Loss: 4.583 -  Validation Accuracy: 0.026
-Run time: 0.184 min
-Epoch: 0/1 Step: 2 -  Training Loss: 4.603 -  Validation Loss: 4.557 -  Validation Accuracy: 0.025
-Run time: 0.363 min
-Epoch: 0/1 Step: 5 -  Training Loss: 4.580 -  Validation Loss: 4.500 -  Validation Accuracy: 0.081
-Run time: 0.585 min
-Epoch: 0/1 Step: 10 -  Training Loss: 4.497 -  Validation Loss: 4.235 -  Validation Accuracy: 0.148
-Run time: 0.856 min
-Epoch: 0/1 Step: 20 -  Training Loss: 4.117 -  Validation Loss: 3.728 -  Validation Accuracy: 0.249
-Run time: 1.239 min
-Epoch: 0/1 Step: 51 -  Training Loss: 3.132 -  Validation Loss: 2.125 -  Validation Accuracy: 0.579
-Run time: 2.097 min
-Epoch: 1/1 Step: 104 -  Training Loss: 1.655 -  Validation Loss: 0.922 -  Validation Accuracy: 0.808
-Run time: 3.442 min
-model: densenet169 - hidden layers: [1024] - epochs: 1 - lr: 0.001
-Run time: 3.442 min
+Epoch: 0/10 Step: 1 -  Training Loss: 4.607 -  Validation Loss: 4.613 -  Validation Accuracy: 0.013
+Epoch: 0/10 Step: 2 -  Training Loss: 4.626 -  Validation Loss: 4.584 -  Validation Accuracy: 0.024
+Epoch: 0/10 Step: 5 -  Training Loss: 4.578 -  Validation Loss: 4.515 -  Validation Accuracy: 0.029
+Epoch: 0/10 Step: 10 -  Training Loss: 4.412 -  Validation Loss: 4.301 -  Validation Accuracy: 0.112
+Epoch: 0/10 Step: 20 -  Training Loss: 4.119 -  Validation Loss: 3.776 -  Validation Accuracy: 0.268
+Epoch: 0/10 Step: 51 -  Training Loss: 3.065 -  Validation Loss: 2.168 -  Validation Accuracy: 0.546
+Epoch: 1/10 Step: 104 -  Training Loss: 1.724 -  Validation Loss: 0.941 -  Validation Accuracy: 0.824
+Epoch: 2/10 Step: 207 -  Training Loss: 0.785 -  Validation Loss: 0.439 -  Validation Accuracy: 0.903
+Epoch: 3/10 Step: 310 -  Training Loss: 0.471 -  Validation Loss: 0.306 -  Validation Accuracy: 0.923
+Epoch: 4/10 Step: 413 -  Training Loss: 0.345 -  Validation Loss: 0.270 -  Validation Accuracy: 0.938
+Epoch: 5/10 Step: 516 -  Training Loss: 0.276 -  Validation Loss: 0.234 -  Validation Accuracy: 0.941
+Epoch: 6/10 Step: 619 -  Training Loss: 0.244 -  Validation Loss: 0.198 -  Validation Accuracy: 0.952
+Epoch: 7/10 Step: 722 -  Training Loss: 0.211 -  Validation Loss: 0.196 -  Validation Accuracy: 0.950
+Epoch: 8/10 Step: 825 -  Training Loss: 0.175 -  Validation Loss: 0.172 -  Validation Accuracy: 0.956
+Epoch: 9/10 Step: 928 -  Training Loss: 0.154 -  Validation Loss: 0.179 -  Validation Accuracy: 0.956
+Epoch: 10/10 Step: 1031 -  Training Loss: 0.138 -  Validation Loss: 0.191 -  Validation Accuracy: 0.950
+model: densenet169 - hidden layers: [1024] - epochs: 10 - lr: 0.001
+Run time: 25.638 min

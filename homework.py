@@ -183,29 +183,29 @@ get_ipython().system('python train.py "./flowers" --arch resnet18 --gpu --epochs
 
 # ### Finetuning the model but only updating the top layers
 
-# In[14]:
+# In[27]:
 
 
-get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --epochs=1 > ./logs/finetune_only_top_layer.txt')
+get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --epochs=10 > ./logs/finetune_only_top_layer.txt')
 
 
 # ### Finetuning the whole model
 
-# In[15]:
+# In[28]:
 
 
-get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --train_all_layers --epochs=1 > ./logs/finetune_whole_model.txt')
+get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --train_all_layers --epochs=10 > ./logs/finetune_whole_model.txt')
 
 
 # ### Training the whole model from scratch
 
-# In[16]:
+# In[29]:
 
 
-get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --not_use_pretrained --train_all_layers --epochs=1 > ./logs/train_from_scratch.txt')
+get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --not_use_pretrained --train_all_layers --epochs=10 > ./logs/train_from_scratch.txt')
 
 
-# In[17]:
+# In[33]:
 
 
 import matplotlib.pyplot as plt
@@ -222,20 +222,17 @@ for file, color in zip(files, colors):
         loss_valid = []
         for line in text:
             words = line.split()
+            if words[0] != "Epoch:": continue
             steps.append(int(words[3]))
             loss_train.append(float(words[7]))
             loss_valid.append(float(words[11]))
         plt.plot(steps, loss_train, label="{} train loss".format(file), ls="--", color=color)
         plt.plot(steps, loss_valid, label="{} valid loss".format(file), ls="-", color=color)
 
+plt.ylabel("loss")
+plt.xlabel("steps")
 plt.legend()
 plt.show()
-
-
-# In[19]:
-
-
-text
 
 
 # ## TASK THREE
@@ -270,7 +267,7 @@ get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --tes
 
 
 
-# In[ ]:
+# In[26]:
 
 
 get_ipython().system('jupyter nbconvert --to script homework.ipynb')
