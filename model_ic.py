@@ -111,12 +111,11 @@ def validation(model, testloader, criterion, device):
 
 # Define NN function
 def make_NN(n_hidden, n_epoch, labelsdict, lr, device, model_name, trainloader, validloader, train_data,
-            not_use_pretrained=False, train_all_layers=False):
+            not_use_pretrained=False, train_all_layers=False, is_homemade=False):
     
-    if not_use_pretrained:
+    if is_homemade:
         model = getattr(models, model_name)
     else:
-    # Import pre-trained NN model 
         model = getattr(models, model_name)(pretrained=not not_use_pretrained)
     
     if not train_all_layers:

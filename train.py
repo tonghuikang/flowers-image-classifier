@@ -14,6 +14,7 @@ parser.add_argument("--save_dir", help="save model")
 parser.add_argument("--not_use_pretrained", default=False, action="store_true")
 parser.add_argument("--train_all_layers", default=False, action="store_true")
 parser.add_argument("--test_model", default=False, action="store_true")
+parser.add_argument("--is_homemade", default=False, action="store_true")
 
 args = parser.parse_args()
 
@@ -23,7 +24,7 @@ trainloader, testloader, validloader, train_data, testloader, test_data = load_d
 
 model = make_NN(n_hidden=[args.hidden_units], n_epoch=args.epochs, labelsdict=cat_to_name, lr=args.learning_rate, device=args.gpu, \
                 model_name=args.arch, trainloader=trainloader, validloader=validloader, train_data=train_data,
-                not_use_pretrained=args.not_use_pretrained, train_all_layers=args.train_all_layers)
+                not_use_pretrained=args.not_use_pretrained, train_all_layers=args.train_all_layers, is_homemade=args.is_homemade)
 
 if args.test_model:
     test_model(model, testloader)

@@ -202,7 +202,7 @@ get_ipython().system('python train.py "./flowers" --arch resnet18 --gpu --epochs
 # In[16]:
 
 
-# !python train.py "./flowers" --arch densenet169 --gpu --not_use_pretrained --train_all_layers --epochs=10 > ./logs/train_from_scratch.txt
+# !python train.py "./flowers" --arch densenet169 --gpu --not_use_pretrained --train_all_layers --epochs=100 > ./logs/train_from_scratch.txt
 
 
 # In[35]:
@@ -258,23 +258,25 @@ get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --tes
 # 
 # (4) Please replace the base model to a new model which contains some convolutional layers. You need to write this new model by yourselves, and then report its performance on the validation set. Note, pls try different numbers of convolutional layers for your model, and compare their results, and give analysis for the results. You need to try at least 2 different numbers of conv layers.
 
-# In[36]:
+# In[42]:
 
 
-get_ipython().system('python train.py "./flowers" --arch homemade_CNN_small --not_use_pretrained --gpu --epochs=1 > ./logs/homemade_CNN_small.txt')
+# !python train.py "./flowers" --arch homemade_CNN_small --not_use_pretrained --gpu --epochs=100 > ./logs/homemade_CNN_small.txt
 
 
-# In[37]:
+# In[43]:
 
 
-get_ipython().system('python train.py "./flowers" --arch homemade_CNN_large --not_use_pretrained --gpu --epochs=1 > ./logs/homemade_CNN_large.txt')
+# !python train.py "./flowers" --arch homemade_CNN_large --not_use_pretrained --gpu --epochs=100 > ./logs/homemade_CNN_large.txt
 
 
-# In[38]:
+# In[40]:
 
 
 compare_loss(["train_from_scratch", "homemade_CNN_small", "homemade_CNN_large"], ["r", "g", "b"])
 
+
+# The small CNN network starts to overfit at the 10th epoch, whereas the larger CNN network overfits at a later at a lower loss.
 
 # ## Extra tasks (not included in Homework 3)
 # 
@@ -282,7 +284,7 @@ compare_loss(["train_from_scratch", "homemade_CNN_small", "homemade_CNN_large"],
 # 
 # (6) Please try using two different optimizers for densenet169, and compare the performance on the validation set.
 
-# In[ ]:
+# In[39]:
 
 
 get_ipython().system('jupyter nbconvert --to script homework.ipynb')
