@@ -205,42 +205,50 @@ get_ipython().system('python train.py "./flowers" --arch resnet18 --gpu --epochs
 # !python train.py "./flowers" --arch densenet169 --gpu --not_use_pretrained --train_all_layers --epochs=10 > ./logs/train_from_scratch.txt
 
 
-# In[17]:
+# In[35]:
 
 
 import matplotlib.pyplot as plt
 
-files = ["finetune_only_top_layer", "finetune_whole_model", "train_from_scratch"]
-colors = ["r", "g", "b"]
-plt.figure(figsize=(14,6))
+def compare_loss(files, colors):
+    plt.figure(figsize=(14,6))
 
-for file, color in zip(files, colors):
-    with open("./logs/{}.txt".format(file), "r") as f:
-        text = f.readlines()
-        steps = []
-        loss_train = []
-        loss_valid = []
-        for line in text:
-            words = line.split()
-            if words[0] != "Epoch:": continue
-            steps.append(int(words[3]))
-            loss_train.append(float(words[7]))
-            loss_valid.append(float(words[11]))
-        plt.plot(steps, loss_train, label="{} train loss".format(file), ls="--", color=color)
-        plt.plot(steps, loss_valid, label="{} valid loss".format(file), ls="-", color=color)
+    for file, color in zip(files, colors):
+        with open("./logs/{}.txt".format(file), "r") as f:
+            text = f.readlines()
+            steps = []
+            loss_train = []
+            loss_valid = []
+            for line in text:
+                words = line.split()
+                if words[0] != "Epoch:": continue
+                steps.append(int(words[3]))
+                loss_train.append(float(words[7]))
+                loss_valid.append(float(words[11]))
+            plt.plot(steps, loss_train, label="{} train loss".format(file), ls="--", color=color)
+            plt.plot(steps, loss_valid, label="{} valid loss".format(file), ls="-", color=color)
 
-plt.ylabel("logloss")
-plt.xlabel("steps")
-plt.yscale("log")
-plt.legend()
-plt.show()
+    plt.ylabel("loss (on logarithmic scale)")
+    plt.xlabel("steps")
+    plt.yscale("log")
+    plt.ylim(0.1,10)
+    plt.legend()
+    plt.show()
 
+compare_loss(["finetune_only_top_layer", "finetune_whole_model", "train_from_scratch"], ["r", "g", "b"])
+
+
+# Training from scratch results in a very slow convergence because all the weights needed to be trained from scratch. I expect the model to converge to very high loss because.
+# 
+# Finetuning pretrained model, whether is it just the full model or the last layer, allow us to achieve low loss quickly.
+# 
+# I would have expected the finetuning of the whole model to overfit more because the number of samples is larger than the number of parameters. I needed more epochs to confirm or deny this hypothesis.
 
 # ## TASK THREE
 # 
 # (3) For the model based on densenet169, please also report its performance (when you use the training method of finetuning the model but only updating the top layers) on the testing set.
 
-# In[ ]:
+# In[29]:
 
 
 get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --test_model --epochs=3')
@@ -250,16 +258,22 @@ get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --tes
 # 
 # (4) Please replace the base model to a new model which contains some convolutional layers. You need to write this new model by yourselves, and then report its performance on the validation set. Note, pls try different numbers of convolutional layers for your model, and compare their results, and give analysis for the results. You need to try at least 2 different numbers of conv layers.
 
-# In[19]:
+# In[36]:
 
 
-get_ipython().system('python train.py "./flowers" --arch homemade_CNN_small --not_use_pretrained --gpu --epochs=10')
+get_ipython().system('python train.py "./flowers" --arch homemade_CNN_small --not_use_pretrained --gpu --epochs=1 > ./logs/homemade_CNN_small.txt')
 
 
-# In[20]:
+# In[37]:
 
 
-get_ipython().system('python train.py "./flowers" --arch homemade_CNN_large --not_use_pretrained --gpu --epochs=10')
+get_ipython().system('python train.py "./flowers" --arch homemade_CNN_large --not_use_pretrained --gpu --epochs=1 > ./logs/homemade_CNN_large.txt')
+
+
+# In[38]:
+
+
+compare_loss(["train_from_scratch", "homemade_CNN_small", "homemade_CNN_large"], ["r", "g", "b"])
 
 
 # ## Extra tasks (not included in Homework 3)
@@ -268,7 +282,7 @@ get_ipython().system('python train.py "./flowers" --arch homemade_CNN_large --no
 # 
 # (6) Please try using two different optimizers for densenet169, and compare the performance on the validation set.
 
-# In[22]:
+# In[ ]:
 
 
 get_ipython().system('jupyter nbconvert --to script homework.ipynb')

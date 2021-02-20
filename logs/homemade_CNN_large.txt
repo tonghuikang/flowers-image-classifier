@@ -1,0 +1,9 @@
+Epoch: 0/1 Step: 1 -  Training Loss: 4.697 -  Validation Loss: 4.627 -  Validation Accuracy: 0.017
+Epoch: 0/1 Step: 2 -  Training Loss: 4.685 -  Validation Loss: 4.625 -  Validation Accuracy: 0.017
+Epoch: 0/1 Step: 5 -  Training Loss: 4.587 -  Validation Loss: 4.619 -  Validation Accuracy: 0.017
+Epoch: 0/1 Step: 10 -  Training Loss: 4.619 -  Validation Loss: 4.606 -  Validation Accuracy: 0.017
+Epoch: 0/1 Step: 20 -  Training Loss: 4.537 -  Validation Loss: 4.586 -  Validation Accuracy: 0.022
+Epoch: 0/1 Step: 51 -  Training Loss: 4.486 -  Validation Loss: 4.427 -  Validation Accuracy: 0.048
+Epoch: 1/1 Step: 104 -  Training Loss: 4.353 -  Validation Loss: 4.209 -  Validation Accuracy: 0.089
+model: homemade_CNN_large - hidden layers: [1024] - epochs: 1 - lr: 0.001
+Run time: 2.099 min
