@@ -22,6 +22,7 @@ class homemade_CNN(nn.Module):
         for i in range(self.num_layers):
             setattr(self, "layer{}".format(i+2), nn.Sequential(
                 nn.Conv2d(in_channels=32, out_channels=32, kernel_size=3, padding=1),
+                nn.Dropout2d(0.01),
                 nn.BatchNorm2d(32),
                 nn.ReLU(),
             ))
@@ -35,7 +36,6 @@ class homemade_CNN(nn.Module):
         self.fc1 = nn.Linear(in_features=193600, out_features=600)
         self.drop = nn.Dropout2d(0.25)
         self.fc2 = nn.Linear(in_features=600, out_features=120)
-        self.fc3 = nn.Linear(in_features=120, out_features=120)
         
     def forward(self, x):
         out = self.layer1(x)
@@ -46,11 +46,10 @@ class homemade_CNN(nn.Module):
         out = self.fc1(out)
         out = self.drop(out)
         out = self.fc2(out)
-        out = self.fc3(out)
         
         return out
 
-homemade_CNN_small = homemade_CNN(1)
+homemade_CNN_small = homemade_CNN(0)
 homemade_CNN_large = homemade_CNN(10)
 setattr(models, "homemade_CNN_small", homemade_CNN_small)
 setattr(models, "homemade_CNN_large", homemade_CNN_large)

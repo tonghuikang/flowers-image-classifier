@@ -1,0 +1,8 @@
+Epoch: 0/100 Step: 1 -  Training Loss: 4.676 -  Validation Loss: 4.623 -  Validation Accuracy: 0.019
+Epoch: 0/100 Step: 2 -  Training Loss: 4.615 -  Validation Loss: 4.618 -  Validation Accuracy: 0.019
+Epoch: 0/100 Step: 5 -  Training Loss: 4.610 -  Validation Loss: 4.592 -  Validation Accuracy: 0.036
+Epoch: 0/100 Step: 10 -  Training Loss: 4.515 -  Validation Loss: 4.529 -  Validation Accuracy: 0.064
+Epoch: 0/100 Step: 20 -  Training Loss: 4.428 -  Validation Loss: 4.362 -  Validation Accuracy: 0.059
+Epoch: 0/100 Step: 51 -  Training Loss: 4.025 -  Validation Loss: 3.732 -  Validation Accuracy: 0.160
+Epoch: 1/100 Step: 104 -  Training Loss: 3.599 -  Validation Loss: 3.225 -  Validation Accuracy: 0.219
+Epoch: 2/100 Step: 207 -  Training Loss: 3.145 -  Validation Loss: 2.832 -  Validation Accuracy: 0.284

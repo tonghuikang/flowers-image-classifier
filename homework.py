@@ -229,7 +229,7 @@ for file, color in zip(files, colors):
         plt.plot(steps, loss_train, label="{} train loss".format(file), ls="--", color=color)
         plt.plot(steps, loss_valid, label="{} valid loss".format(file), ls="-", color=color)
 
-plt.ylabel("loss")
+plt.ylabel("logloss")
 plt.xlabel("steps")
 plt.yscale("log")
 plt.legend()
@@ -250,16 +250,16 @@ get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --tes
 # 
 # (4) Please replace the base model to a new model which contains some convolutional layers. You need to write this new model by yourselves, and then report its performance on the validation set. Note, pls try different numbers of convolutional layers for your model, and compare their results, and give analysis for the results. You need to try at least 2 different numbers of conv layers.
 
-# In[ ]:
+# In[19]:
 
 
-get_ipython().system('python train.py "./flowers" --arch homemade_CNN_small --not_use_pretrained --gpu --epochs=3')
+get_ipython().system('python train.py "./flowers" --arch homemade_CNN_small --not_use_pretrained --gpu --epochs=10')
 
 
 # In[20]:
 
 
-get_ipython().system('python train.py "./flowers" --arch homemade_CNN_large --not_use_pretrained --gpu --epochs=3')
+get_ipython().system('python train.py "./flowers" --arch homemade_CNN_large --not_use_pretrained --gpu --epochs=10')
 
 
 # ## Extra tasks (not included in Homework 3)
@@ -268,7 +268,7 @@ get_ipython().system('python train.py "./flowers" --arch homemade_CNN_large --no
 # 
 # (6) Please try using two different optimizers for densenet169, and compare the performance on the validation set.
 
-# In[21]:
+# In[22]:
 
 
 get_ipython().system('jupyter nbconvert --to script homework.ipynb')
