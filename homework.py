@@ -205,12 +205,12 @@ get_ipython().system('python train.py "./flowers" --arch resnet18 --gpu --epochs
 # !python train.py "./flowers" --arch densenet169 --gpu --not_use_pretrained --train_all_layers --epochs=100 > ./logs/train_from_scratch.txt
 
 
-# In[2]:
+# In[32]:
 
 
 import matplotlib.pyplot as plt
 
-def compare_loss(files, colors):
+def compare_loss(files, colors, ymin=0.1):
     plt.figure(figsize=(14,6))
 
     for file, color in zip(files, colors):
@@ -231,11 +231,11 @@ def compare_loss(files, colors):
     plt.ylabel("loss (on logarithmic scale)")
     plt.xlabel("steps")
     plt.yscale("log")
-    plt.ylim(0.1,10)
+    plt.ylim(ymin,10)
     plt.legend()
     plt.show()
 
-compare_loss(["finetune_only_top_layer", "finetune_whole_model", "train_from_scratch"], ["r", "g", "b"])
+compare_loss(["finetune_only_top_layer", "finetune_whole_model", "train_from_scratch"], ["r", "g", "b"], ymin=0.01)
 
 
 # Training from scratch results in a very slow convergence because all the weights needed to be trained from scratch. The loss it converges to is higher because it did not take advantage from the pretrained weights learnt from a far bigger dataset.
@@ -272,10 +272,10 @@ get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --tes
 # !python train.py "./flowers" --arch homemade_CNN_large --is_homemade --gpu --epochs=100 > ./logs/homemade_CNN_large.txt
 
 
-# In[5]:
+# In[33]:
 
 
-compare_loss(["train_from_scratch", "homemade_CNN_small", "homemade_CNN_large"], ["b", "g", "r"])
+compare_loss(["train_from_scratch", "homemade_CNN_small", "homemade_CNN_large"], ["b", "g", "r"], ymin=1)
 
 
 # The small CNN network (2 convolutional layers) starts to overfit at the 10th epoch, whereas the larger CNN network (4 convolutional layers) overfits later.
@@ -290,7 +290,7 @@ compare_loss(["train_from_scratch", "homemade_CNN_small", "homemade_CNN_large"],
 # 
 # (6) Please try using two different optimizers for densenet169, and compare the performance on the validation set.
 
-# In[1]:
+# In[6]:
 
 
 get_ipython().system('jupyter nbconvert --to script homework.ipynb')
