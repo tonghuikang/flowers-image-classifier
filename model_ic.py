@@ -18,14 +18,16 @@ class homemade_CNN(nn.Module):
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2)
         )
+        
         self.num_layers = num_layers
         for i in range(self.num_layers):
             setattr(self, "layer{}".format(i+2), nn.Sequential(
                 nn.Conv2d(in_channels=32, out_channels=32, kernel_size=3, padding=1),
                 nn.Dropout2d(0.01),
                 nn.BatchNorm2d(32),
-                nn.ReLU(),
+                nn.ReLU()
             ))
+        
         self.layer0 = nn.Sequential(
             nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3),
             nn.BatchNorm2d(64),
@@ -50,7 +52,7 @@ class homemade_CNN(nn.Module):
         return out
 
 homemade_CNN_small = homemade_CNN(0)
-homemade_CNN_large = homemade_CNN(10)
+homemade_CNN_large = homemade_CNN(2)
 setattr(models, "homemade_CNN_small", homemade_CNN_small)
 setattr(models, "homemade_CNN_large", homemade_CNN_large)
 

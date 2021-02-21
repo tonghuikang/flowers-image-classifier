@@ -186,7 +186,7 @@ get_ipython().system('python train.py "./flowers" --arch resnet18 --gpu --epochs
 # In[14]:
 
 
-# !python train.py "./flowers" --arch densenet169 --gpu --epochs=10 > ./logs/finetune_only_top_layer.txt
+# !python train.py "./flowers" --arch densenet169 --gpu --epochs=100 > ./logs/finetune_only_top_layer.txt
 
 
 # ### Finetuning the whole model
@@ -194,18 +194,18 @@ get_ipython().system('python train.py "./flowers" --arch resnet18 --gpu --epochs
 # In[15]:
 
 
-# !python train.py "./flowers" --arch densenet169 --gpu --train_all_layers --epochs=10 > ./logs/finetune_whole_model.txt
+# !python train.py "./flowers" --arch densenet169 --gpu --train_all_layers --epochs=100 > ./logs/finetune_whole_model.txt
 
 
 # ### Training the whole model from scratch
 
-# In[16]:
+# In[46]:
 
 
 # !python train.py "./flowers" --arch densenet169 --gpu --not_use_pretrained --train_all_layers --epochs=100 > ./logs/train_from_scratch.txt
 
 
-# In[35]:
+# In[2]:
 
 
 import matplotlib.pyplot as plt
@@ -238,7 +238,7 @@ def compare_loss(files, colors):
 compare_loss(["finetune_only_top_layer", "finetune_whole_model", "train_from_scratch"], ["r", "g", "b"])
 
 
-# Training from scratch results in a very slow convergence because all the weights needed to be trained from scratch. I expect the model to converge to very high loss because.
+# Training from scratch results in a very slow convergence because all the weights needed to be trained from scratch. The loss it converges to is higher because it did not take advantage from the pretrained weights learnt from a far bigger dataset.
 # 
 # Finetuning pretrained model, whether is it just the full model or the last layer, allow us to achieve low loss quickly.
 # 
@@ -254,6 +254,8 @@ compare_loss(["finetune_only_top_layer", "finetune_whole_model", "train_from_scr
 get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --test_model --epochs=3')
 
 
+# For this task, I added an option to run the code to test the model.
+
 # ## TASK FOUR
 # 
 # (4) Please replace the base model to a new model which contains some convolutional layers. You need to write this new model by yourselves, and then report its performance on the validation set. Note, pls try different numbers of convolutional layers for your model, and compare their results, and give analysis for the results. You need to try at least 2 different numbers of conv layers.
@@ -261,22 +263,26 @@ get_ipython().system('python train.py "./flowers" --arch densenet169 --gpu --tes
 # In[42]:
 
 
-# !python train.py "./flowers" --arch homemade_CNN_small --not_use_pretrained --gpu --epochs=100 > ./logs/homemade_CNN_small.txt
+# !python train.py "./flowers" --arch homemade_CNN_small --is_homemade --gpu --epochs=100 > ./logs/homemade_CNN_small.txt
 
 
 # In[43]:
 
 
-# !python train.py "./flowers" --arch homemade_CNN_large --not_use_pretrained --gpu --epochs=100 > ./logs/homemade_CNN_large.txt
+# !python train.py "./flowers" --arch homemade_CNN_large --is_homemade --gpu --epochs=100 > ./logs/homemade_CNN_large.txt
 
 
-# In[40]:
+# In[5]:
 
 
-compare_loss(["train_from_scratch", "homemade_CNN_small", "homemade_CNN_large"], ["r", "g", "b"])
+compare_loss(["train_from_scratch", "homemade_CNN_small", "homemade_CNN_large"], ["b", "g", "r"])
 
 
-# The small CNN network starts to overfit at the 10th epoch, whereas the larger CNN network overfits at a later at a lower loss.
+# The small CNN network (2 convolutional layers) starts to overfit at the 10th epoch, whereas the larger CNN network (4 convolutional layers) overfits later.
+# - Overfitting is observed when the training loss is significantly lower than the validation loss.
+# 
+# The larger CNN network did not achieve a lower validation loss.
+# - This is because the number of samples are limited.
 
 # ## Extra tasks (not included in Homework 3)
 # 
@@ -284,7 +290,7 @@ compare_loss(["train_from_scratch", "homemade_CNN_small", "homemade_CNN_large"],
 # 
 # (6) Please try using two different optimizers for densenet169, and compare the performance on the validation set.
 
-# In[39]:
+# In[1]:
 
 
 get_ipython().system('jupyter nbconvert --to script homework.ipynb')
